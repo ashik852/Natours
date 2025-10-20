@@ -13,7 +13,7 @@ const reviewRouter = require("./Routes/reviewRoute");
 const tourRouter = require("./Routes/tourRoute");
 const userRouter = require("./Routes/userRoute");
 const viewRouter = require("./Routes/viewRouter");
-// const cors = require("cors");
+ const cors = require("cors");
 // Global middleware
 
 const app = express();
@@ -31,7 +31,7 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-// app.use(cors());
+ app.use(cors());
 
 // Limit requests from same IP
 const limiter = rateLimiter({
@@ -77,7 +77,7 @@ app.use((req, res, next) => {
   console.log("Middleware executed for route:", req.originalUrl);
   next();
 });
-app.get("./", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Server is running!");
 });
 // app.get("/tour", (req, res) => {
