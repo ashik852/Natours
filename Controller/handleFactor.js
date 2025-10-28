@@ -14,6 +14,7 @@ const AppError = require("./../utilits/appError");
 //     });
 //   });
 // handlerFactory.js
+// handlerFactory.js
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findById(req.params.id);
@@ -22,9 +23,15 @@ exports.deleteOne = (Model) =>
       return next(new AppError("No document found with that ID", 404));
     }
 
-    // যদি model এ user field থাকে, তাহলে ownership check করো
-    if (doc.user && doc.user.id !== req.user.id && req.user.role !== "admin") {
-      return next(new AppError("You do not have permission to delete this document", 403));
+    // Ownership check (যদি model এ user field থাকে)
+    if (
+      doc.user &&
+      doc.user.toString() !== req.user.id &&
+      req.user.role !== "admin"
+    ) {
+      return next(
+        new AppError("You do not have permission to delete this document", 403)
+      );
     }
 
     await Model.findByIdAndDelete(req.params.id);
@@ -34,6 +41,7 @@ exports.deleteOne = (Model) =>
       data: null,
     });
   });
+
 
 exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
