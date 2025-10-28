@@ -1,18 +1,40 @@
 const catchAsync = require("./../utilits/catchAsync");
 const APIFeatures = require("./../utilits/apiFeatures");
 const AppError = require("./../utilits/appError");
-exports.deletOne = (Model) =>
+// exports.deletOne = (Model) =>
+//   catchAsync(async (req, res, next) => {
+//     const doc = await Model.findByIdAndDelete(req.params.id);
+//     if (!doc) {
+//       return next(new AppError("No document found with that ID", 404));
+//     }
+
+//     res.status(204).json({
+//       status: "success",
+//       data: null,
+//     });
+//   });
+// handlerFactory.js
+exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.findByIdAndDelete(req.params.id);
+    const doc = await Model.findById(req.params.id);
+
     if (!doc) {
       return next(new AppError("No document found with that ID", 404));
     }
+
+    // যদি model এ user field থাকে, তাহলে ownership check করো
+    if (doc.user && doc.user.id !== req.user.id && req.user.role !== "admin") {
+      return next(new AppError("You do not have permission to delete this document", 403));
+    }
+
+    await Model.findByIdAndDelete(req.params.id);
 
     res.status(204).json({
       status: "success",
       data: null,
     });
   });
+
 exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
