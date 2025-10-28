@@ -16,7 +16,7 @@ const AppError = require("./../utilits/appError");
 // handlerFactory.js
 // handlerFactory.js
 // handlerFactory.js
-exports.deleteOne = (Model) =>
+exports.deletOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findById(req.params.id);
 
