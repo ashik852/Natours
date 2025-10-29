@@ -32,7 +32,8 @@ if (process.env.NODE_ENV === "development") {
 }
 
  app.use(cors({
-  origin: ['http://localhost:5173', 'https://natours-3da0.onrender.com']
+  origin: ['http://localhost:5173', 'https://natours-3da0.onrender.com'],
+  credentials: true
 }));
 
 // Limit requests from same IP
