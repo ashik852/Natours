@@ -31,11 +31,12 @@ app.use(helmet());
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+app.use(cors());
 
- app.use(cors({
-  origin: ['http://localhost:5173', 'https://natours-3da0.onrender.com']
+//  app.use(cors({
+//   origin: ['http://localhost:5173', 'https://natours-3da0.onrender.com']
   
-}));
+// }));
 
 // Limit requests from same IP
 const limiter = rateLimiter({
