@@ -13,6 +13,7 @@ const reviewRouter = require("./Routes/reviewRoute");
 const tourRouter = require("./Routes/tourRoute");
 const userRouter = require("./Routes/userRoute");
 const viewRouter = require("./Routes/viewRouter");
+const bookingRoutes = require("./Routes/bookingRoutes");
  const cors = require("cors");
 // Global middleware
 
@@ -96,6 +97,7 @@ app.use("/", viewRouter);
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reviewRouter);
+app.use("/api/v1/bookings", bookingRoutes);
 
 app.all("*", (req, res, next) => {
   // res.status(404).json({
